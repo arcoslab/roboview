@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+try:
+    import roboview.main
+except ImportError:
+    import main

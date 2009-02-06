@@ -1,0 +1,67 @@
+RoboView <http://www9.in.tum.de/~kleinehe/roboview.html> is a
+kinematic chain viewer based on the Orocos KDL <http://orocos.org/kdl>
+library.
+
+You use can use it to display kinematic chains and test the forward
+and inverse kinematics using KDL.
+
+It was written by Jonathan Kleinehellefort for the Technische
+Universität München.
+
+INSTALLING
+==========
+
+You will need Python 2.4, PyGTK <http://www.pygtk.org/>, KDL with
+Python bindings <http://orocos.org/kdl> and VTK with Python bindings
+<http://www.vtk.org/> in order to run RoboView.
+
+You can (but do not have to) install RoboView using distutils (you may
+need root permissions for that):
+
+    python setup.py install --prefix=/usr/local
+
+See ``python setup.py --help'' for more information.
+
+RUNNING
+=======
+
+To run RoboView, call it with an Python file describing a kinematic chain:
+
+    roboview robodef.py
+
+Where robodef.py looks something like this (see KDL documentation for
+details):
+
+---
+from PyKDL import *
+from math import pi
+
+segments = [
+    Segment(Joint(Joint.RotZ),
+            Frame(Rotation.RotX(pi/2), Vector(0, -.045, .225))),
+    Segment(Joint(Joint.RotZ),
+            Frame(Rotation.RotY(-pi/2), Vector(0, 0, .215))),
+    Segment(Joint(Joint.RotZ),
+            Frame(Rotation.RotY(pi/2), Vector(.135, 0, 0))),
+    Segment(Joint(Joint.RotZ),
+            Frame(Rotation.RotY(-pi/2), Vector(0, 0, .175))),
+    Segment(Joint(Joint.RotZ),
+            Frame(Rotation.RotY(pi/2), Vector(.1, 0, 0))),
+    Segment(Joint(Joint.TransZ),
+            Frame(Rotation.RotY(pi/2), Vector(.1, 0, 0))),
+    Segment(Joint(Joint.RotZ),
+            Frame(Rotation.RotZ(pi/2), Vector(0, 0, .165)))]
+---
+
+USER INPUT
+==========
+
+Left-button drag on background      rotate camera
+Middle-button drag on background    move camera
+Button drag on joint                change joint value
+Left-button drag on end effector    rotate end effector (tries to do
+                                        inverse kinematics)
+Middle-button drag on end effector  translate end effector (tries to do
+                                        inverse kinematics)
+Key R                               reset camera
+Key Q                               quit
