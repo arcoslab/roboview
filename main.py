@@ -44,6 +44,9 @@ import imp
 import threading
 from ui import RobotWidget
 
+import yarp
+import time
+
 # command-line parsing
 if len(sys.argv) == 1 or (len(sys.argv) == 2 and sys.argv[1] == '--help'):
     print __doc__
@@ -348,4 +351,76 @@ def update_joints_main():
 
 #threading.Thread(target=update_joints_main).start()
 
-display.run()
+#display.run()
+
+rate = 0.02 # [s]
+display_multiplier = 4
+
+qin=yarp.BufferedPortBottle()
+qin.open("/roboview/qin")
+qvin=yarp.BufferedPortBottle()
+qvin.open("/roboview/qvin")
+qout=yarp.BufferedPortBottle()
+qout.open("/roboview/qout")
+
+display.show()
+
+finalTime = time.time()
+display_counter=0
+
+vels = [0, 0, 0, 0, 0, 0, 0]
+
+num_joints = world.robot.jnt_pos.rows()
+
+while display.is_alive():
+  initTime = time.time()
+  while display.busy() and (time.time() - initTime) < rate*0.9:
+    display.handle_event()
+
+  # write current position
+  bot=qout.prepare()
+  bot.clear()
+  for i in range(num_joints):
+    bot.addDouble(world.robot.jnt_pos[i])
+  qout.write()
+
+  # read commanded position
+  bottlein = qin.read(False)
+  if bottlein and bottlein.size() == num_joints:
+    for i in range(num_joints):
+      world.robot.jnt_pos[i] = bottlein.get(i).asDouble()
+
+  # read commanded velocities
+  bottlein = qvin.read(False)
+  if bottlein and bottlein.size() == num_joints:
+    for i in range(num_joints):
+      vels[i] = bottlein.get(i).asDouble()
+
+  # apply velocities
+  factor = finalTime-time.time()
+  for i in range (num_joints):
+    world.robot.jnt_pos[i] = world.robot.jnt_pos[i] + vels[i]*factor
+
+  # handle limits
+  if robodef.limits_min and robodef.limits_max:
+    for i in range (num_joints):
+     world.robot.jnt_pos[i] = min(robodef.limits_max[i],
+                               max(robodef.limits_min[i],
+                                world.robot.jnt_pos[i]))
+
+  # refresh display
+  if display_counter == display_multiplier:
+    display.redraw()
+    controller.update()
+    display_counter=0
+  else:
+    display_counter=display_counter+1
+
+  # handle sleeping
+  finalTime = time.time()
+  sleepTime = rate - (finalTime - initTime)
+  if sleepTime>0:
+    time.sleep(sleepTime)
+
+  initTime = time.time()
+

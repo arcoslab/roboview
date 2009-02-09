@@ -20,4 +20,9 @@ segments = [
      Frame(Vector(0,0,0.100))),
      ]
 
+limits_min = [-169.9, -119.9, -169.9, -119.9, -169.9, -119.9, -169.9]
+limits_max = [ 169.9,  119.9,  169.9,  119.9,  169.9,  119.9,  169.9]
+
+limits_min = [v*pi/180.0 for v in limits_min]
+limits_max = [v*pi/180.0 for v in limits_max]
 

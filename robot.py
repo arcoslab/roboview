@@ -22,7 +22,6 @@
 
 from PyKDL import *
 from math import pi
-import yarp
 
 _type_to_str = {
     Joint.RotX: 'rot_x',
@@ -86,9 +85,6 @@ class Robot(object):
             self.joints.append(RJoint(self, i, n))
             if seg.getJoint().getType() != Joint.None:
                 n += 1
-        self.qout=yarp.BufferedPortBottle()
-        self.qout.open("/roboview/qout")
-
 
     def __iter__(self):
         return iter(self.joints)
@@ -111,14 +107,6 @@ class Robot(object):
 
         if self.ik_solver.CartToJnt(jnt_pos, frame, jnt_pos) == 0:
             self.jnt_pos = jnt_pos
-            bot=self.qout.prepare()
-            bot.clear()
-
-            for i in range(jnt_pos.rows()):
-                bot.addDouble(jnt_pos[i])
-
-            self.qout.write()
-
             return True
         else:
             return False

@@ -170,6 +170,14 @@ class Display(object):
     def run(self):
         self.ui_win.show()
         gtk.main()
+    def show(self):
+        self.ui_win.show()
+    def is_alive(self):
+        return self.ui_win.get_property("visible")
+    def busy(self):
+        return gtk.events_pending()
+    def handle_event(self):
+        return gtk.main_iteration(False)
 
     def reset_camera(self):
         self.ren.ResetCamera()
