@@ -374,7 +374,7 @@ num_joints = world.robot.jnt_pos.rows()
 
 while display.is_alive():
   initTime = time.time()
-  while display.busy() and (time.time() - initTime) < rate*0.9:
+  while display.busy() and (time.time() - initTime) < rate*0.8:
     display.handle_event()
 
   # write current position
@@ -396,11 +396,6 @@ while display.is_alive():
     for i in range(num_joints):
       vels[i] = bottlein.get(i).asDouble()
 
-  # apply velocities
-  factor = finalTime-time.time()
-  for i in range (num_joints):
-    world.robot.jnt_pos[i] = world.robot.jnt_pos[i] + vels[i]*factor
-
   # handle limits
   if robodef.limits_min and robodef.limits_max:
     for i in range (num_joints):
@@ -415,6 +410,13 @@ while display.is_alive():
     display_counter=0
   else:
     display_counter=display_counter+1
+
+  # apply velocities
+  factor = time.time()-finalTime
+  for i in range (num_joints):
+    world.robot.jnt_pos[i] = world.robot.jnt_pos[i] + vels[i]*factor
+  
+  #print "factor: "+str(factor)+" "+reduce(str.__add__,[str(v)+" " for v in vels])
 
   # handle sleeping
   finalTime = time.time()
