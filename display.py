@@ -93,7 +93,8 @@ class Display(object):
         self.view.connect('motion_notify_event', self._on_mouse_move)
         self.view.add_events(gtk.gdk.BUTTON_PRESS_MASK |
                              gtk.gdk.BUTTON_RELEASE_MASK |
-                             gtk.gdk.BUTTON_MOTION_MASK)
+                             gtk.gdk.BUTTON_MOTION_MASK |
+			     gtk.gdk.POINTER_MOTION_HINT_MASK)
         self.mappers = []
         self.callbacks = {}
         self.dispatcher = EventDispatcher()
