@@ -22,6 +22,10 @@ need root permissions for that):
 
 See ``python setup.py --help'' for more information.
 
+some packages you MAY need:
+
+apt-get install python-vtk python-pyvtk python-gtk2-dev python-gtkglext1
+
 RUNNING
 =======
 
