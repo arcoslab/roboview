@@ -37,8 +37,6 @@ segments = [
     Frame(Rotation.RotX(pi/2), Vector(0, -0.078, 0.0))),
   Segment(Joint(Joint.RotZ),
     Frame(Rotation.RotZ(pi/4)*Rotation.RotY(pi/2), Vector(0.075, 0.075, -0.094))), #To wrist
-  Segment(Joint(Joint.None),
-    Frame(Rotation.Identity(), Vector(0.07, 0.025, 0.28)))  #To fingertips
     ]
 
 
