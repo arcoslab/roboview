@@ -15,6 +15,6 @@ segments = [
     Segment(Joint(Joint.RotX,-1),
      Frame(Vector(0,0,0))),
     Segment(Joint(Joint.RotY,-1),
-     Frame(Rotation(Rotation.RotX(pi/2)*Rotation.RotZ(pi/2)),Vector(0,-0.265,0)))]
+     Frame(Vector(0,-0.265,0)))]
 
 
