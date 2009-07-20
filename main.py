@@ -368,9 +368,8 @@ display.show()
 finalTime = time.time()
 display_counter=0
 
-vels = [0, 0, 0, 0, 0, 0, 0]
-
 num_joints = world.robot.jnt_pos.rows()
+vels = [0]*num_joints
 
 while display.is_alive():
   initTime = time.time()
