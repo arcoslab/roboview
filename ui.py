@@ -25,21 +25,26 @@ __all__ = ['RobotWidget']
 from display import *
 from math import pi, sqrt, acos, sin
 
-basic_arrow = scale(.1, .1, .1, arrow)
+arrow_size=0.05
+basic_arrow = scale(arrow_size,arrow_size,arrow_size, arrow)
 x_arrow = basic_arrow
 y_arrow = rotate_z(pi/2, basic_arrow)
 z_arrow = rotate_y(-pi/2, basic_arrow)
-x_cylinder = scale(.05, .05, .05, rotate_z(pi/2, cylinder))
-y_cylinder = scale(.05, .05, .05, cylinder)
-z_cylinder = scale(.05, .05, .05, rotate_x(pi/2, cylinder))
+cylinder_size=0.02
+cube_size=0.02
+sphere_size=0.02
+link_size=0.01
+x_cylinder = scale(cylinder_size,cylinder_size, cylinder_size, rotate_z(pi/2, cylinder))
+y_cylinder = scale(cylinder_size, cylinder_size, cylinder_size, cylinder)
+z_cylinder = scale(cylinder_size, cylinder_size, cylinder_size, rotate_x(pi/2, cylinder))
 hx_cylinder = scale(.5, 1, 1, x_cylinder)
-joint_cube = scale(.05, .05, .05, cube)
-transx_cylinder = scale(.05, .03, .03, translate(.5, 0, 0,
+joint_cube = scale(cube_size, cube_size, cube_size, cube)
+transx_cylinder = scale(cylinder_size, .03, .03, translate(.5, 0, 0,
                                              rotate_z(pi/2, cylinder)))
 link_cylinder = translate(0.5, 0, 0,
-                          scale(1, .02, .02,
+                          scale(1, link_size, link_size,
                                 rotate_z(-pi/2, cylinder)))
-ef_sphere = scale(.05, .05, .05, sphere)
+ef_sphere = scale(sphere_size, sphere_size, sphere_size, sphere)
 
 def vec_abs(v):
     x, y, z = v
