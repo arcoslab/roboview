@@ -21,7 +21,7 @@
 # not, see <http://www.gnu.org/licenses/>.
 """Roboview -- A Robot Viewer for KDL
 
-Usage: roboview [--nav3d-dev <dev>] <file>
+Usage: roboview [--nav3d-dev <dev>] <file> <prefix>
        roboview [--help]
 
 Where <file> is a python module specifying the robot's structure.
@@ -47,6 +47,7 @@ from ui import RobotWidget
 import yarp
 import time
 
+prefix=""
 # command-line parsing
 if len(sys.argv) == 1 or (len(sys.argv) == 2 and sys.argv[1] == '--help'):
     print __doc__
@@ -54,12 +55,16 @@ if len(sys.argv) == 1 or (len(sys.argv) == 2 and sys.argv[1] == '--help'):
 else:
     if len(sys.argv) == 2:
         robodef_module = sys.argv[1]
+    elif len(sys.argv) == 3:
+        robodef_module = sys.argv[1]
+        prefix= sys.argv[2]
     else:
         print >>sys.stderr, 'Invalid command line arguments!'
         print >>sys.stderr
         print >>sys.stderr, __doc__
         sys.exit(1)
 
+print "Using prefix: %s" %(prefix)
 robodef = imp.load_source('robodev', robodef_module)
 
 import gobject
@@ -357,11 +362,11 @@ rate = 0.02 # [s]
 display_multiplier = 4
 
 qin=yarp.BufferedPortBottle()
-qin.open("/roboview/qin")
+qin.open(prefix+"/roboview/qin")
 qvin=yarp.BufferedPortBottle()
-qvin.open("/roboview/qvin")
+qvin.open(prefix+"/roboview/qvin")
 qout=yarp.BufferedPortBottle()
-qout.open("/roboview/qout")
+qout.open(prefix+"/roboview/qout")
 
 display.show()
 
