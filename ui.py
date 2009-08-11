@@ -25,15 +25,15 @@ __all__ = ['RobotWidget']
 from display import *
 from math import pi, sqrt, acos, sin
 
-arrow_size=0.05
+arrow_size=0.10
 basic_arrow = scale(arrow_size,arrow_size,arrow_size, arrow)
 x_arrow = basic_arrow
 y_arrow = rotate_z(pi/2, basic_arrow)
 z_arrow = rotate_y(-pi/2, basic_arrow)
-cylinder_size=0.02
-cube_size=0.02
-sphere_size=0.02
-link_size=0.01
+cylinder_size=0.04
+cube_size=0.04
+sphere_size=0.04
+link_size=0.02
 x_cylinder = scale(cylinder_size,cylinder_size, cylinder_size, rotate_z(pi/2, cylinder))
 y_cylinder = scale(cylinder_size, cylinder_size, cylinder_size, cylinder)
 z_cylinder = scale(cylinder_size, cylinder_size, cylinder_size, rotate_x(pi/2, cylinder))
