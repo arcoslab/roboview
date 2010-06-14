@@ -45,6 +45,8 @@ import threading
 from ui import RobotWidget
 
 import yarp
+yarp.Network.init()
+
 import time
 
 prefix=""
