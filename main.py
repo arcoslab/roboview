@@ -47,7 +47,7 @@ from ui import RobotWidget
 import yarp
 yarp.Network.init()
 
-import time
+import time,os
 
 prefix=""
 # command-line parsing
@@ -66,7 +66,16 @@ else:
         print >>sys.stderr, __doc__
         sys.exit(1)
 
-print "Using prefix: %s" %(prefix)
+print "ConfigFilename:", robodef_module
+robodef_module_path=reduce(lambda x,y: x+"/"+y, robodef_module.split("/")[:-1])
+print "Dir", robodef_module_path
+robodef_module_name=robodef_module.split("/")[-1]
+print "ConfigFilename name:", robodef_module_name
+if not os.path.exists(robodef_module):
+    print "Config filename: ", robodef_module, " not found, exiting"
+    sys.exit(-1)
+sys.path.append(robodef_module_path)
+
 robodef = imp.load_source('robodev', robodef_module)
 
 import gobject

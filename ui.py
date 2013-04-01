@@ -153,7 +153,7 @@ class JointWidget(object):
         display.register(id(self), None, 'move', handle_move)
 
     def update(self, frame, value):
-        for i, j in [(i, j) for i in range(4) for j in range(4)]:
+        for i, j in [(i, j) for i in range(3) for j in range(4)]:
             self.frame[i, j] = frame[i, j]
 
 class TransJointWidget(object):
@@ -192,7 +192,7 @@ class TransJointWidget(object):
         display.register(id(self), None, 'move', handle_move)
 
     def update(self, frame, value):
-        for i, j in [(i, j) for i in range(4) for j in range(4)]:
+        for i, j in [(i, j) for i in range(3) for j in range(4)]:
             self.frame[i, j] = frame[i, j]
         self.len_frame[0, 0] = 20 * value + 1
 
@@ -212,7 +212,7 @@ class NoneJointWidget(object):
             display.add(None, t(make_link_cylinder(self.joint)), opacity=.3)
 
     def update(self, frame, value):
-        for i, j in [(i, j) for i in range(4) for j in range(4)]:
+        for i, j in [(i, j) for i in range(3) for j in range(4)]:
             self.frame[i, j] = frame[i, j]
 
 class EndEffectorWidget(object):
@@ -251,7 +251,7 @@ class EndEffectorWidget(object):
         display.register((id(self), 'rotating'), None, 'move', handle_rotate)
 
     def update(self, frame):
-        for i, j in [(i, j) for i in range(4) for j in range(4)]:
+        for i, j in [(i, j) for i in range(3) for j in range(4)]:
             self.frame[i, j] = frame[i, j]
 
 class RobotWidget(object):
