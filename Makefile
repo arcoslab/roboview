@@ -2,6 +2,9 @@ NAME=roboview
 PREFIX ?= ${HOME}/local/DIR/${NAME}
 DEB_TARGET=python-roboview_0.1-1_all.deb
 
+all:
+	echo "Does nothing, try make install"
+
 install:
 	python setup.py install --prefix=${PREFIX}
 
